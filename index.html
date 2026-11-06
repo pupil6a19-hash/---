@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101114">
+<title>ADMIN EXAM — Проверка администрации</title>
+<style>
+:root{--bg:#090a0d;--panel:#14161b;--panel2:#1a1d23;--line:#303540;--text:#f2f3f5;--muted:#969ca8;--accent:#e7e9ee;--red:#e05252;--green:#55c994;--silver:#cbd1dc}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -22%,#343b48 0%,#171a20 34%,#0d0f13 70%,#090a0c 100%);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;display:flex;justify-content:center;padding:38px 16px;overflow-x:hidden}body:before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,black,transparent 75%)}
+button,input{font:inherit}
+.shell{width:100%;max-width:790px;margin:auto;position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.mark{width:46px;height:46px;border:1px solid #687180;border-radius:14px;display:grid;place-items:center;font-weight:850;font-size:18px;letter-spacing:-1px;background:linear-gradient(145deg,#3a414d,#15181e);box-shadow:inset 0 1px #ffffff25,0 8px 24px #0006}
+.brand-name{font-weight:800;letter-spacing:2px;font-size:14px}
+.brand-sub{color:var(--muted);font-size:11px;letter-spacing:1.5px;margin-top:4px}
+.card{background:linear-gradient(155deg,rgba(29,32,39,.98),rgba(15,17,22,.99) 72%);border:1px solid #363c47;border-radius:20px;padding:clamp(23px,5vw,40px);box-shadow:0 28px 90px #0009,inset 0 1px #ffffff0a;position:relative;overflow:hidden}.card:before{content:'';position:absolute;left:8%;right:8%;top:0;height:1px;background:linear-gradient(90deg,transparent,#aeb7c7aa,transparent)}
+.eyebrow{font-size:10px;letter-spacing:2.2px;color:#b8c0cd;font-weight:800}
+h1{font-size:clamp(27px,5vw,39px);letter-spacing:-1.35px;margin:12px 0 9px;line-height:1.08}
+p{color:var(--muted);line-height:1.6;margin:0}
+.field{margin-top:27px}
+label{display:block;font-size:13px;font-weight:650;margin-bottom:9px}
+input[type=text],input[type=url],input[type=text]{width:100%;background:linear-gradient(180deg,#11141a,#0c0e12);border:1px solid #3a414d;border-radius:11px;padding:15px 16px;color:white;outline:none;transition:.2s}
+select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23aeb4bf' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center;padding-right:42px}
+input:focus,select:focus{border-color:#9da5b2;box-shadow:0 0 0 3px #aab2c014}
+.notice{margin-top:20px;padding:17px;border:1px solid #363d48;background:linear-gradient(145deg,#151920,#101217);border-radius:14px;display:grid;gap:14px}
+.notice-row{display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.45}
+.notice-row b{display:block;margin-bottom:2px}
+.notice-icon{width:31px;height:31px;border-radius:9px;background:linear-gradient(145deg,#303744,#1b2028);border:1px solid #414957;display:grid;place-items:center;flex:none;color:#e3e7ee}
+.confirm{display:flex;align-items:flex-start;gap:10px;margin-top:18px;color:#c7cbd2;font-size:13px;line-height:1.5}
+.confirm input{accent-color:#e7e9ee;margin-top:3px}
+.btn{border:0;border-radius:10px;padding:14px 18px;font-weight:750;cursor:pointer;transition:.18s}
+.btn-primary{width:100%;margin-top:22px;background:linear-gradient(135deg,#f0f2f6,#bfc6d1);color:#111318;box-shadow:0 8px 24px #cbd1dc20,inset 0 1px #fff}
+.btn-primary:hover{background:white;transform:translateY(-1px)}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px}
+.pill{padding:8px 11px;border:1px solid var(--line);border-radius:9px;color:#cbd0d8;font-size:12px}
+.timer{font-variant-numeric:tabular-nums;font-weight:800;font-size:17px}
+.timer.warning{color:var(--red)}
+.progress-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:9px}
+.progress{height:5px;background:#292d35;border-radius:10px;overflow:hidden;margin-bottom:28px}
+.progress>div{height:100%;background:#dfe2e8;width:0;transition:width .25s}
+.question{font-size:21px;line-height:1.35;letter-spacing:-.35px;margin:9px 0 22px}
+.answers{display:grid;gap:10px}
+.answer{display:flex;gap:12px;align-items:center;padding:16px;border:1px solid #353c47;background:linear-gradient(120deg,#15181e,#101217);border-radius:12px;cursor:pointer;transition:.18s;color:#dfe2e8;line-height:1.45}
+.answer:hover{border-color:#737b89;background:#191c22}
+.answer.selected{border-color:#b8c1cf;background:linear-gradient(120deg,#303744,#20252d);color:white;box-shadow:inset 0 0 0 1px #b8c1cf30,0 5px 18px #0004}
+.answer input{accent-color:#e7e9ee}
+.actions{display:flex;justify-content:flex-end;margin-top:24px}
+.actions .btn{min-width:160px}
+.small{font-size:11px;color:var(--muted);line-height:1.5;margin-top:16px}
+.result-score{font-size:48px;font-weight:850;letter-spacing:-2px;margin:15px 0 4px}.result-hero{display:flex;align-items:center;gap:24px;padding:22px;margin:22px 0 18px;border:1px solid #3b424e;border-radius:16px;background:radial-gradient(circle at 10% 0%,#343c49aa,transparent 60%),linear-gradient(135deg,#1b2028,#111318)}.score-ring{width:124px;height:124px;flex:none;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#dce2eb var(--score,0%),#343a45 0);position:relative;box-shadow:0 8px 30px #0006}.score-ring:before{content:'';position:absolute;inset:8px;border-radius:50%;background:#171a20;border:1px solid #424a57}.score-ring strong{position:relative;font-size:25px;letter-spacing:-1px}.result-kicker{font-size:10px;letter-spacing:1.8px;color:#aeb7c5;font-weight:800}.result-message{font-size:14px;color:#c6cbd4;line-height:1.55;margin-top:7px}.result-status{margin-top:14px}.result-footer{border:1px solid #343b46;background:#11141a;border-radius:12px;padding:15px;margin-top:18px}.result-footer b{display:block;font-size:13px;margin-bottom:5px}.result-footer p{font-size:12px}
+.result-status{display:inline-block;padding:7px 11px;border-radius:8px;background:#20352d;color:#78d5a7;font-size:12px;font-weight:800;margin:12px 0 20px}
+.result-status.fail{background:#3b2528;color:#f08b8b}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.stat{background:#101217;border:1px solid var(--line);border-radius:10px;padding:13px}
+.stat strong{display:block;font-size:20px;margin-bottom:4px}
+.stat span{font-size:11px;color:var(--muted)}
+.hidden{display:none!important}
+hr{border:0;border-top:1px solid var(--line);margin:24px 0}
+@media(max-width:520px){body{padding:18px 12px}.card{border-radius:15px;padding:22px 18px}.stats{grid-template-columns:1fr 1fr}.question{font-size:19px}.actions .btn{width:100%}.result-hero{gap:15px;padding:16px}.score-ring{width:98px;height:98px}.score-ring strong{font-size:21px}.result-score{font-size:38px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="brand">
+    <div class="mark">A</div>
+    <div><div class="brand-name">ADMIN EXAM</div><div class="brand-sub">ПРОВЕРКА ЗНАНИЙ АДМИНИСТРАЦИИ</div></div>
+  </div>
+
+  <section class="card" id="intro">
+    <div class="eyebrow">ЭКЗАМЕН · CRMP PROJECT</div>
+    <h1>Проверка администрации</h1>
+    <p>Ответьте на вопросы о правилах администрации, наказаниях и работе с нарушениями.</p>
+    <div class="field">
+      <label for="nickname">Ваш игровой NickName</label>
+      <input id="nickname" type="text" maxlength="40" placeholder="Например: Artem_Kartashow" autocomplete="off">
+    </div>
+    <div class="field" style="margin-top:18px">
+      <label for="position">На какую должность проходите обзвон?</label>
+      <input id="position" type="text" maxlength="60" placeholder="Например: Старший администратор" autocomplete="off">
+    </div>
+    <div class="notice">
+      <div class="notice-row"><div class="notice-icon">◷</div><div><b>Ограничение по времени</b>На прохождение даётся ровно 5 минут.</div></div>
+      <div class="notice-row"><div class="notice-icon">▣</div><div><b>Видеозапись обязательна</b>Включите запись экрана до нажатия кнопки «Начать экзамен» и записывайте весь процесс.</div></div>
+      <div class="notice-row"><div class="notice-icon">!</div><div><b>Правила прохождения</b>Вопросы и варианты ответов перемешиваются. Вернуться к предыдущему вопросу нельзя. При окончании времени ответы отправятся автоматически.</div></div>
+    </div>
+    <label class="confirm"><input type="checkbox" id="recordConfirm"><span>Я включил(а) видеозапись экрана и подтверждаю, что буду записывать весь экзамен.</span></label>
+    <button class="btn btn-primary" id="startBtn" disabled>Начать экзамен</button>
+    <div class="small">Тестовый прототип. Подтверждение записи не является технической проверкой — сайт не может самостоятельно удостовериться, что запись действительно ведётся.</div>
+  </section>
+
+  <section class="card hidden" id="quiz">
+    <div class="topline">
+      <div class="pill" id="candidate">АДМИНИСТРАТОР</div>
+      <div class="pill">ОСТАЛОСЬ <span class="timer" id="timer">05:00</span></div>
+    </div>
+    <div class="progress-meta"><span id="questionCounter">Вопрос 1 из 20</span><span id="progressPercent">5%</span></div>
+    <div class="progress"><div id="progressBar"></div></div>
+    <div class="eyebrow" id="category">ПРАВИЛА АДМИНИСТРАЦИИ</div>
+    <div class="question" id="questionText"></div>
+    <div class="answers" id="answers"></div>
+    <div class="actions"><button class="btn btn-primary" id="nextBtn" disabled>Ответить и продолжить</button></div>
+    <div class="small">Не обновляйте страницу и не закрывайте вкладку. Попытка и время сохраняются в этом браузере.</div>
+  </section>
+
+  <section class="card hidden" id="result">
+    <div class="eyebrow">ЭКЗАМЕН ЗАВЕРШЁН</div>
+    <h1>Результаты проверки</h1>
+    <p id="resultName"></p>
+    <div class="result-hero" id="resultHero">
+      <div class="score-ring" id="scoreRing"><strong id="ringScore">0/20</strong></div>
+      <div>
+        <div class="result-kicker" id="resultKicker">ИТОГОВЫЙ РЕЗУЛЬТАТ</div>
+        <div class="result-score" id="score">0 / 20</div>
+        <p id="percentText">0% правильных ответов</p>
+        <div class="result-status" id="status">РЕЗУЛЬТАТ</div>
+        <div class="result-message" id="resultMessage">Результат вашей проверки появится здесь.</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong id="correctCount">0</strong><span>Правильных</span></div>
+      <div class="stat"><strong id="wrongCount">0</strong><span>Ошибок</span></div>
+      <div class="stat"><strong id="timeUsed">00:00</strong><span>Затрачено</span></div>
+    </div>
+    <hr>
+    <div class="field">
+      <label for="videoLink">Ссылка на видеозапись (YouTube / Google Drive)</label>
+      <input type="url" id="videoLink" placeholder="https://...">
+    </div>
+    <button class="btn btn-primary" id="copyBtn">Скопировать результаты</button>
+    <div class="result-footer">
+      <b>Следующий шаг</b>
+      <p id="resultNextStep">Добавьте ссылку на видеозапись и передайте итог руководству проекта для проверки.</p>
+    </div>
+    <div class="small" id="copyNote">Попытка единственная: повторно пройти экзамен в этом браузере нельзя. В этой демоверсии результаты не отправляются автоматически.</div>
+  </section>
+</div>
+
+<script>
+const QUESTION_BANK = [
+ {c:"Правила администрации",q:"Что запрещено администратору делать на каптах?",a:["Использовать AGM","Помогать игрокам","Следить за порядком"],k:0},
+ {c:"Правила администрации",q:"Какое наказание предусмотрено за использование AGM на каптах?",a:["Предупреждение","Выговор","Снятие с должности"],k:2},
+ {c:"Правила администрации",q:"Разрешено ли администратору покупать или ловить бизнесы?",a:["Да, без ограничений","Нет, это запрещено","Только с разрешения игрока"],k:1},
+ {c:"Правила администрации",q:"Что предусмотрено за покупку бизнеса администратором?",a:["Выговор","Мут на 30 минут","Снятие без разбирательства"],k:0},
+ {c:"Обязанности администратора",q:"Какие основные обязанности администрации указаны в правилах?",a:["Помощь игрокам и контроль сервера","Участие во всех госстроях","Покупка бизнесов"],k:0},
+ {c:"Обязанности администратора",q:"На каких площадках указана реклама для медиа-партнёров?",a:["TikTok, YouTube, Twitch, VK","Только Telegram","Только Instagram и Discord"],k:0},
+ {c:"Наказания игроков",q:"Какое наказание предусмотрено за оскорбление родных?",a:["Мут 100 минут","Бан на 3 дня","Бан на 15 дней"],k:1},
+ {c:"Наказания игроков",q:"Какое наказание предусмотрено за передачу виртов?",a:["Бан на 3 дня","Выговор","Перманентный бан"],k:2},
+ {c:"Наказания игроков",q:"Какое наказание предусмотрено за стороннее ПО?",a:["Перманентный бан","Мут 60 минут","Бан на 1 день"],k:0},
+ {c:"Наказания игроков",q:"Какое наказание предусмотрено за слив семьи?",a:["Бан на 3 дня","Бан на 15 дней","Бан на 30 дней"],k:1},
+ {c:"Наказания игроков",q:"Какое наказание предусмотрено за слив госслужбы?",a:["Бан на 30 дней","Бан на 15 дней","Перманентный бан"],k:0},
+ {c:"Наказания игроков",q:"Какое наказание предусмотрено за порчу экономики?",a:["Мут 100 минут","Перманентный бан","Бан на 3 дня"],k:1},
+ {c:"Наказания игроков",q:"Какое наказание предусмотрено за использование автокликеров?",a:["Перманентный бан","Выговор","Мут 30 минут"],k:0},
+ {c:"Муты",q:"На сколько выдаётся мут за капс?",a:["5 минут","10 минут","15 минут"],k:1},
+ {c:"Муты",q:"На сколько выдаётся мут за мат в VIP?",a:["10 минут","15 минут","30 минут"],k:1},
+ {c:"Муты",q:"На сколько выдаётся мут за оскорбление родных?",a:["60 минут","100 минут","120 минут"],k:1},
+ {c:"Муты",q:"На сколько выдаётся мут за оскорбление администрации?",a:["15 минут","30 минут","60 минут"],k:1},
+ {c:"ДМГ",q:"На сколько выдаётся ДМГ за ДМ?",a:["15 минут","20 минут","30 минут"],k:1},
+ {c:"ДМГ",q:"На сколько выдаётся ДМГ за ТК?",a:["10 минут","15 минут","20 минут"],k:1},
+ {c:"ДМГ",q:"Какое наказание предусмотрено за массовый ДМ?",a:["Варн + ДМГ 30 минут","Только мут 30 минут","Бан на 3 дня"],k:0},
+ {c:"ДМГ",q:"На сколько выдаётся ДМГ за багоюз?",a:["15 минут","30 минут","60 минут"],k:1},
+ {c:"Баны",q:"Что предусмотрено за трансфер?",a:["Перманентный бан + обнуление","Мут 100 минут","Бан на 3 дня"],k:0},
+ {c:"Баны",q:"Какое наказание предусмотрено за обман?",a:["Бан на 1 день","Перманентный бан","Выговор"],k:1},
+ {c:"Баны",q:"Что предусмотрено за продажу ИВ?",a:["Перманентный бан / ОЧСП","Мут 60 минут","Бан на 3 дня"],k:0},
+ {c:"Баны",q:"Какое наказание предусмотрено за политический или религиозный розжиг?",a:["Бан 1 день + мут 60 минут","Бан 30 дней","Только мут 15 минут"],k:0},
+ {c:"Ситуационные задачи",q:"Игрок жалуется на другого игрока. Как должен поступить администратор?",a:["Разобраться в ситуации и проверить доказательства","Сразу выдать максимальное наказание","Игнорировать жалобу"],k:0},
+ {c:"Ситуационные задачи",q:"Вы не уверены, подходит ли конкретное наказание под нарушение. Что правильнее сделать?",a:["Угадать срок","Проверить правила и уточнить у старшей администрации","Выдать случайное наказание"],k:1},
+ {c:"Ситуационные задачи",q:"Вы обнаружили нарушение, для которого в правилах указано конкретное наказание. Ваши действия?",a:["Применить соответствующее наказание после проверки ситуации","Не обращать внимания","Наказать строже по своему усмотрению"],k:0}
+];
+
+const PASS_SCORE = 15;
+const STORAGE_KEY = "admin_exam_demo_v1";
+const $ = id => document.getElementById(id);
+let state = null, tickHandle = null;
+
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function fmt(sec){sec=Math.max(0,sec);return String(Math.floor(sec/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0");}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+function show(which){["intro","quiz","result"].forEach(id=>$(id).classList.toggle("hidden",id!==which));}
+function start(){
+ const nick=$("nickname").value.trim();
+ const position=$("position").value.trim();
+ if(!nick||!position||!$("recordConfirm").checked||localStorage.getItem(STORAGE_KEY))return;
+ const chosen=shuffle(QUESTION_BANK).slice(0,20).map(q=>{
+   const options=q.a.map((t,i)=>({t,correct:i===q.k}));
+   return {...q,options:shuffle(options)};
+ });
+ state={nick,position,questions:chosen,index:0,answers:[],startedAt:Date.now(),deadline:Date.now()+300000,finished:false};
+ save();show("quiz");renderQuestion();startTimer();
+}
+function startTimer(){
+ clearInterval(tickHandle);
+ tickHandle=setInterval(()=>{
+   if(!state||state.finished)return;
+   const left=Math.ceil((state.deadline-Date.now())/1000);
+   $("timer").textContent=fmt(left);
+   $("timer").classList.toggle("warning",left<=60);
+   if(left<=0)finish(true);
+   save();
+ },250);
+}
+function renderQuestion(){
+ const q=state.questions[state.index],total=state.questions.length;
+ $("candidate").textContent=state.nick+" · "+(state.position||"Должность не указана");
+ $("questionCounter").textContent=`Вопрос ${state.index+1} из ${total}`;
+ $("progressPercent").textContent=Math.round((state.index+1)/total*100)+"%";
+ $("progressBar").style.width=((state.index+1)/total*100)+"%";
+ $("category").textContent=q.c.toUpperCase();
+ $("questionText").textContent=q.q;
+ $("answers").innerHTML="";
+ q.options.forEach((opt,i)=>{
+   const label=document.createElement("label");label.className="answer";
+   const radio=document.createElement("input");radio.type="radio";radio.name="answer";radio.value=i;
+   radio.addEventListener("change",()=>{
+     document.querySelectorAll(".answer").forEach(x=>x.classList.remove("selected"));
+     label.classList.add("selected");$("nextBtn").disabled=false;
+   });
+   const span=document.createElement("span");span.textContent=opt.t;
+   label.append(radio,span);$("answers").append(label);
+ });
+ $("nextBtn").disabled=true;
+ $("nextBtn").textContent=state.index===total-1?"Завершить экзамен":"Ответить и продолжить";
+}
+function next(){
+ const picked=document.querySelector('input[name="answer"]:checked');
+ if(!picked)return;
+ const q=state.questions[state.index];
+ state.answers.push({correct:q.options[Number(picked.value)].correct});
+ state.index++;
+ save();
+ if(state.index>=state.questions.length)finish(false);else renderQuestion();
+}
+function finish(timeout){
+ if(!state||state.finished)return;
+ if(timeout){
+   // Unanswered questions count as incorrect; current unanswered question is not added.
+ }
+ state.finished=true;state.endedAt=Date.now();state.timeout=timeout;save();clearInterval(tickHandle);
+ const correct=state.answers.filter(a=>a.correct).length,total=state.questions.length;
+ const percent=Math.round(correct/total*100),wrong=total-correct;
+ $("resultName").textContent="Кандидат: "+state.nick+" · Должность: "+(state.position||"Не указана")+(timeout?" · Время истекло":"");
+ $("score").textContent=`${correct} / ${total}`;
+ $("ringScore").textContent=`${correct}/20`;
+ $("scoreRing").style.setProperty("--score",(correct/total*100)+"%");
+ $("percentText").textContent=percent+"% правильных ответов";
+ $("correctCount").textContent=correct;$("wrongCount").textContent=wrong;
+ $("timeUsed").textContent=fmt(Math.min(300,Math.floor((state.endedAt-state.startedAt)/1000)));
+ const passed=correct>=PASS_SCORE&&!timeout;
+ $("status").textContent=passed?"ЭКЗАМЕН СДАН":"ЭКЗАМЕН НЕ СДАН";
+ $("status").classList.toggle("fail",!passed);
+ $("resultKicker").textContent=passed?"ПОЗДРАВЛЯЕМ · ПРОХОДНОЙ БАЛЛ НАБРАН":"ИТОГ · НУЖНО УЛУЧШИТЬ РЕЗУЛЬТАТ";
+ $("resultMessage").textContent=passed
+   ? "Вы набрали необходимый минимум. Результат передан вам для предоставления руководству вместе с видеозаписью."
+   : (timeout ? "Время вышло до завершения экзамена. Незавершённые вопросы засчитаны как ошибки." : "Для успешного прохождения необходимо набрать минимум 15 баллов из 20. Сейчас этого результата недостаточно.");
+ $("resultNextStep").textContent=passed
+   ? "Прикрепите видеозапись и отправьте её руководству. Окончательное решение по должности принимает руководство проекта."
+   : "Передайте руководству результат и видеозапись. Повторная попытка в этом браузере не предусмотрена.";
+ show("result");
+}
+function copyResults(){
+ const correct=state.answers.filter(a=>a.correct).length,total=state.questions.length;
+ const link=$("videoLink").value.trim();
+ const text=`РЕЗУЛЬТАТЫ ОБЗВОНА\nNickName: ${state.nick}\nДолжность: ${state.position||"Не указана"}\nБаллы: ${correct}/${total}\nПроцент: ${Math.round(correct/total*100)}%\nПравильных: ${correct}\nОшибок: ${total-correct}\nВремя: ${$("timeUsed").textContent}\nСтатус: ${$("status").textContent}\nВидеозапись: ${link||"Не указана"}`;
+ navigator.clipboard?.writeText(text).then(()=>{$("copyNote").textContent="Результаты скопированы. Отправьте их руководству вместе с видеозаписью.";}).catch(()=>{$("copyNote").textContent=text;});
+}
+function restore(){
+ const raw=localStorage.getItem(STORAGE_KEY);
+ if(!raw)return;
+ try{state=JSON.parse(raw);if(!state||!state.nick)return;
+   $("nickname").value=state.nick;
+   if($("position"))$("position").value=state.position||"";
+   if(state.finished){
+     const correct=state.answers.filter(a=>a.correct).length,total=state.questions.length,percent=Math.round(correct/total*100);
+     $("resultName").textContent="Кандидат: "+state.nick+" · Должность: "+(state.position||"Не указана")+(state.timeout?" · Время истекло":"");
+     $("score").textContent=`${correct} / ${total}`;$("ringScore").textContent=`${correct}/20`;$("scoreRing").style.setProperty("--score",(correct/total*100)+"%");$("percentText").textContent=percent+"% правильных ответов";
+     $("correctCount").textContent=correct;$("wrongCount").textContent=total-correct;
+     $("timeUsed").textContent=fmt(Math.min(300,Math.floor((state.endedAt-state.startedAt)/1000)));
+     const passed=correct>=PASS_SCORE&&!state.timeout;$("status").textContent=passed?"ЭКЗАМЕН СДАН":"ЭКЗАМЕН НЕ СДАН";$("status").classList.toggle("fail",!passed);$("resultKicker").textContent=passed?"ПОЗДРАВЛЯЕМ · ПРОХОДНОЙ БАЛЛ НАБРАН":"ИТОГ · НУЖНО УЛУЧШИТЬ РЕЗУЛЬТАТ";$("resultMessage").textContent=passed?"Вы набрали необходимый минимум. Передайте руководству результат вместе с видеозаписью.":(state.timeout?"Время вышло до завершения экзамена. Незавершённые вопросы засчитаны как ошибки.":"Для успешного прохождения необходимо набрать минимум 15 баллов из 20.");$("resultNextStep").textContent=passed?"Прикрепите видеозапись и отправьте её руководству. Окончательное решение по должности принимает руководство проекта.":"Передайте руководству результат и видеозапись. Повторная попытка в этом браузере не предусмотрена.";show("result");
+   }else if(Date.now()>=state.deadline){finish(true);}
+   else{show("quiz");renderQuestion();startTimer();}
+ }catch(e){localStorage.removeItem(STORAGE_KEY);}
+}
+function updateStartButton(){
+  const alreadyStarted=!!localStorage.getItem(STORAGE_KEY);
+  $("startBtn").disabled=!$("nickname").value.trim()||!$("position").value||!$("recordConfirm").checked||alreadyStarted;
+  if(alreadyStarted){$("startBtn").textContent="Попытка уже использована";}
+}
+$("nickname").addEventListener("input",updateStartButton);
+$("position").addEventListener("change",updateStartButton);
+$("recordConfirm").addEventListener("change",updateStartButton);
+$("startBtn").addEventListener("click",start);
+$("nextBtn").addEventListener("click",next);
+$("copyBtn").addEventListener("click",copyResults);
+restore();
+updateStartButton();
+</script>
+</body>
+</html>
